@@ -281,6 +281,7 @@ begin
   dmDatabase.tblServiceProviders.Locate('ID', fID, []);
   frmPropertyOwner.lblChosenCompany.Caption := 'Company: ' +
     dmDatabase.tblServiceProviders['CompanyName'];
+  frmPropertyOwner.cmbRequestServiceType.Visible := False;
 
 end;
 

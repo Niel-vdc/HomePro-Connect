@@ -19,7 +19,7 @@ object frmPropertyOwner: TfrmPropertyOwner
     Top = 60
     Width = 750
     Height = 490
-    ActivePage = tabBrowse
+    ActivePage = tabCompare
     Align = alClient
     TabOrder = 0
     object tabBrowse: TTabSheet
@@ -378,6 +378,21 @@ object frmPropertyOwner: TfrmPropertyOwner
           ParentBackground = False
           ParentFont = False
           TabOrder = 1
+          OnClick = pnlRequestButtonClick
+        end
+        object cmbRequestServiceType: TComboBox
+          Left = 176
+          Top = 89
+          Width = 385
+          Height = 27
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Roboto'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 2
+          Text = 'Select service type'
         end
       end
     end
@@ -391,6 +406,7 @@ object frmPropertyOwner: TfrmPropertyOwner
         Width = 742
         Height = 480
         Align = alClient
+        ParentBackground = False
         TabOrder = 0
         object lblCompareHeading: TLabel
           Left = 96
@@ -406,17 +422,53 @@ object frmPropertyOwner: TfrmPropertyOwner
           ParentFont = False
         end
         object dbGrid: TDBGrid
-          Left = 56
+          Left = 32
           Top = 97
-          Width = 641
+          Width = 673
           Height = 280
-          DataSource = dmDatabase.dsQuerySP
+          DataSource = dmDatabase.dsRequestOffers
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Roboto'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 0
-          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Charset = ANSI_CHARSET
           TitleFont.Color = clWindowText
-          TitleFont.Height = -12
-          TitleFont.Name = 'Segoe UI'
+          TitleFont.Height = -16
+          TitleFont.Name = 'Roboto Bk'
           TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'ID'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Service Type'
+              Width = 150
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Company'
+              Width = 150
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Quote Offered'
+              Title.Caption = 'Quote'
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Your description'
+              Visible = True
+            end>
         end
       end
     end
@@ -483,7 +535,7 @@ object frmPropertyOwner: TfrmPropertyOwner
       OnMouseLeave = NavlinkMouseLeave
     end
     object pnlNavlinkCompare: TPanel
-      Left = 143
+      Left = 254
       Top = 2
       Width = 113
       Height = 58
@@ -522,6 +574,28 @@ object frmPropertyOwner: TfrmPropertyOwner
       ParentBackground = False
       ParentFont = False
       TabOrder = 2
+      OnClick = NavlinkClick
+      OnMouseEnter = NavlinkMouseEnter
+      OnMouseLeave = NavlinkMouseLeave
+    end
+    object pnlNavLinkRequest: TPanel
+      Left = 143
+      Top = 2
+      Width = 113
+      Height = 58
+      Cursor = crHandPoint
+      Hint = '1'
+      BevelOuter = bvNone
+      Caption = 'Request'
+      Color = 16686901
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Name = 'Roboto Bk'
+      Font.Style = []
+      ParentBackground = False
+      ParentFont = False
+      TabOrder = 3
       OnClick = NavlinkClick
       OnMouseEnter = NavlinkMouseEnter
       OnMouseLeave = NavlinkMouseLeave

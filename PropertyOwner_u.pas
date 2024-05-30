@@ -46,6 +46,8 @@ type
     lblChosenCompany: TLabel;
     btnRequestBack: TSpeedButton;
     dbGrid: TDBGrid;
+    pnlNavLinkRequest: TPanel;
+    cmbRequestServiceType: TComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure NavlinkMouseEnter(Sender: TObject);
     procedure NavlinkMouseLeave(Sender: TObject);
@@ -60,6 +62,9 @@ type
     procedure filterCards;
     procedure sortCards;
     procedure radJobsCompletedClick(Sender: TObject);
+    procedure pnlRequestButtonClick(Sender: TObject);
+
+  var
   private
     { Private declarations }
     selectedNavLink: TPanel;
@@ -72,6 +77,8 @@ var
   frmPropertyOwner: TfrmPropertyOwner;
 
 implementation
+
+uses Login_u;
 
 {$R *.dfm}
 
@@ -144,7 +151,8 @@ begin
         dmDatabase.qryServiceProviders.sql.Add('AND CompletedJobs > 10');
       2: // > 50
         dmDatabase.qryServiceProviders.sql.Add('AND CompletedJobs > 50');
-      3: // > 100
+      3:
+        // > 100
         dmDatabase.qryServiceProviders.sql.Add('AND CompletedJobs > 100');
 
     end;
@@ -158,12 +166,10 @@ begin
   dmDatabase.qryServiceProviders.Close;
   dmDatabase.qryServiceProviders.Active := true;
 
-  dmDatabase.dsQuerySP.DataSet := dmDatabase.qryServiceProviders;
-  dbGrid.DataSource := dmDatabase.dsQuerySP;
-
 end;
 
 procedure TfrmPropertyOwner.FormClose(Sender: TObject;
+
   var Action: TCloseAction);
 begin
   Application.Terminate;
@@ -186,6 +192,59 @@ begin
     if not(TPanel(Sender) = selectedNavLink) then
       TPanel(Sender).Color := TColor($00FEA034); // primary
   end;
+end;
+
+procedure TfrmPropertyOwner.pnlRequestButtonClick(Sender: TObject);
+var
+  sCompany: string;
+begin
+  if (cmbRequestServiceType.Text = 'Select service type') and
+    (cmbRequestServiceType.Visible = true) then
+  begin
+    showMessage('Please select a service type');
+    exit;
+  end;
+
+  if length(memDescription.Text) < 10 then
+  begin
+    showMessage('Please enter a thorough but concise description');
+    exit;
+  end;
+
+  // request
+
+  with dmDatabase do
+  begin
+    tblRequests.Open;
+    tblRequests.Last;
+    tblRequests.Insert;
+    tblRequests['Description'] := Trim(memDescription.Text);
+    tblRequests['PropertyOwnerID'] := frmLogin.iUserID;
+
+    if cmbRequestServiceType.Visible then
+    begin
+      tblServiceTypes.Locate('ServiceType', cmbRequestServiceType.Text, []);
+      tblRequests['ServiceTypeID'] := tblServiceTypes['ID'];
+    end
+
+    else
+    begin
+      sCompany := lblChosenCompany.Caption;
+      Delete(sCompany, 1, 9);
+      tblServiceProviders.Locate('CompanyName', sCompany, []);
+      tblRequests['ServiceProviderID'] := tblServiceProviders['ID']
+    end;
+
+    tblRequests.Post;
+
+  end;
+
+  // success
+
+  PageControl.ActivePageIndex := 0;
+  showMessage
+    ('Your request has been sent. Check your "Compare" tab to view your offers!');
+
 end;
 
 procedure TfrmPropertyOwner.queryServiceProviders(sql: string);
@@ -214,9 +273,11 @@ begin
   // this is only to be used in filterCards - do not call procedure on its own
   dmDatabase.qryServiceProviders.Open;
   case radRating.ItemIndex of
-    1: // increasing
+    1:
+      // increasing
       dmDatabase.qryServiceProviders.sql.Add(' ORDER BY Rating ASC');
-    2: // decreasing
+    2:
+      // decreasing
       dmDatabase.qryServiceProviders.sql.Add(' ORDER BY Rating DESC');
   end;
 
@@ -242,6 +303,7 @@ begin
   while not dmDatabase.tblServiceTypes.Eof do
   begin
     cmbFilterServiceType.Items.Add(dmDatabase.tblServiceTypes['ServiceType']);
+    cmbRequestServiceType.Items.Add(dmDatabase.tblServiceTypes['ServiceType']);
     dmDatabase.tblServiceTypes.Next;
   end;
   cmbFilterServiceType.ItemIndex := 0;
@@ -250,14 +312,17 @@ begin
   filterCards;
   drawServiceProviderCards;
 
+  dmDatabase.qryRequestOffers.Filter := 'PropertyOwner = ' + intToStr(frmLogin.iUserID);
 end;
 
 procedure TfrmPropertyOwner.NavlinkClick(Sender: TObject);
 begin
   selectedNavLink.Color := TColor($00FEA034); // primary
   selectedNavLink := TPanel(Sender);
-  selectedNavLink.Color := TColor($00D98C35); // primary dark
+  selectedNavLink.Color := TColor($00D98C35);
+  // primary dark
   PageControl.ActivePageIndex := strToInt(selectedNavLink.Hint);
+  cmbRequestServiceType.Visible := true;
 end;
 
 end.

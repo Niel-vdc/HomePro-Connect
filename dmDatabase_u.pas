@@ -13,6 +13,9 @@ type
     tblServiceProviders: TADOTable;
     qryServiceProviders: TADOQuery;
     dsQuerySP: TDataSource;
+    tblRequests: TADOTable;
+    dsRequestOffers: TDataSource;
+    qryRequestOffers: TADOQuery;
   private
     { Private declarations }
   public

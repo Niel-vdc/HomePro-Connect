@@ -66,4 +66,34 @@ object dmDatabase: TdmDatabase
     Left = 408
     Top = 128
   end
+  object tblRequests: TADOTable
+    Active = True
+    Connection = conDB
+    CursorType = ctStatic
+    TableName = 'Requests'
+    Left = 232
+    Top = 368
+  end
+  object dsRequestOffers: TDataSource
+    DataSet = qryRequestOffers
+    Left = 416
+    Top = 200
+  end
+  object qryRequestOffers: TADOQuery
+    Active = True
+    Connection = conDB
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      
+        'SELECT ID, (SELECT ServiceType FROM ServiceTypes WHERE ID = (SEL' +
+        'ECT ServiceType FROM ServiceProviders WHERE ID = Offers.ServiceP' +
+        'roviderID)) AS [Service Type], (SELECT CompanyName FROM ServiceP' +
+        'roviders WHERE ID = Offers.ServiceProviderID) AS Company, FORMAT' +
+        '(Quote, '#39'Currency'#39') AS [Quote Offered], (SELECT Description FROM' +
+        ' Requests WHERE ID = Offers.RequestID) AS [Your description]'
+      'FROM Offers;')
+    Left = 352
+    Top = 392
+  end
 end

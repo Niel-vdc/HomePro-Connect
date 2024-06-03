@@ -38,6 +38,7 @@ object dmDatabase: TdmDatabase
     Top = 304
   end
   object tblServiceProviders: TADOTable
+    Active = True
     Connection = conDB
     CursorType = ctStatic
     TableName = 'ServiceProviders'
@@ -45,6 +46,7 @@ object dmDatabase: TdmDatabase
     Top = 128
   end
   object qryServiceProviders: TADOQuery
+    Active = True
     Connection = conDB
     CursorType = ctStatic
     Parameters = <>
@@ -65,5 +67,54 @@ object dmDatabase: TdmDatabase
     DataSet = qryServiceProviders
     Left = 408
     Top = 128
+  end
+  object tblRequests: TADOTable
+    Active = True
+    Connection = conDB
+    CursorType = ctStatic
+    TableName = 'Requests'
+    Left = 232
+    Top = 368
+  end
+  object dsRequestOffers: TDataSource
+    AutoEdit = False
+    DataSet = qryRequestOffers
+    Left = 416
+    Top = 200
+  end
+  object qryRequestOffers: TADOQuery
+    Active = True
+    Connection = conDB
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      
+        'SELECT ID, RequestID, (SELECT ServiceType FROM ServiceTypes WHER' +
+        'E ID = (SELECT ServiceType FROM ServiceProviders WHERE ID = Offe' +
+        'rs.ServiceProviderID)) AS [Service Type], (SELECT CompanyName FR' +
+        'OM ServiceProviders WHERE ID = Offers.ServiceProviderID) AS Comp' +
+        'any, FORMAT(Quote, '#39'Currency'#39') AS [Quote Offered], (SELECT Descr' +
+        'iption FROM Requests WHERE ID = Offers.RequestID) AS [Your descr' +
+        'iption]'
+      'FROM Offers'
+      'ORDER BY RequestID;')
+    Left = 352
+    Top = 392
+  end
+  object tblOffers: TADOTable
+    Active = True
+    Connection = conDB
+    CursorType = ctStatic
+    TableName = 'Offers'
+    Left = 128
+    Top = 392
+  end
+  object tblRatings: TADOTable
+    Active = True
+    Connection = conDB
+    CursorType = ctStatic
+    TableName = 'Ratings'
+    Left = 112
+    Top = 56
   end
 end

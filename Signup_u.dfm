@@ -10,18 +10,16 @@ object frmSignup: TfrmSignup
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OldCreateOrder = True
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 15
   object PageControl: TPageControl
     Left = 0
     Top = 0
     Width = 750
     Height = 550
-    ActivePage = tabSPDescribe
+    ActivePage = tabPurpose
     Align = alClient
     TabOrder = 0
     object tabPurpose: TTabSheet
@@ -320,6 +318,14 @@ object frmSignup: TfrmSignup
           ParentFont = False
           OnClick = btnBackLoginClick
         end
+        object pnlFuture: TPanel
+          Left = 456
+          Top = 208
+          Width = 150
+          Height = 150
+          Caption = 'For future development'
+          TabOrder = 0
+        end
       end
     end
     object tabPODetails: TTabSheet
@@ -495,7 +501,7 @@ object frmSignup: TfrmSignup
           BorderStyle = bsNone
           Color = clWhite
           EditLabel.Width = 65
-          EditLabel.Height = 19
+          EditLabel.Height = 33
           EditLabel.Caption = 'Surname'
           EditLabel.Font.Charset = ANSI_CHARSET
           EditLabel.Font.Color = clGrayText
@@ -513,6 +519,7 @@ object frmSignup: TfrmSignup
           LabelSpacing = 30
           ParentFont = False
           TabOrder = 0
+          Text = ''
         end
         object edtPOName: TLabeledEdit
           Left = 200
@@ -522,7 +529,7 @@ object frmSignup: TfrmSignup
           BorderStyle = bsNone
           Color = clWhite
           EditLabel.Width = 42
-          EditLabel.Height = 19
+          EditLabel.Height = 33
           EditLabel.Caption = 'Name'
           EditLabel.Font.Charset = ANSI_CHARSET
           EditLabel.Font.Color = clGrayText
@@ -540,6 +547,7 @@ object frmSignup: TfrmSignup
           LabelSpacing = 30
           ParentFont = False
           TabOrder = 1
+          Text = ''
         end
         object edtPOEmail: TLabeledEdit
           Left = 200
@@ -549,7 +557,7 @@ object frmSignup: TfrmSignup
           BorderStyle = bsNone
           Color = clWhite
           EditLabel.Width = 47
-          EditLabel.Height = 19
+          EditLabel.Height = 33
           EditLabel.Caption = 'E-Mail'
           EditLabel.Font.Charset = ANSI_CHARSET
           EditLabel.Font.Color = clGrayText
@@ -567,6 +575,7 @@ object frmSignup: TfrmSignup
           LabelSpacing = 30
           ParentFont = False
           TabOrder = 2
+          Text = ''
         end
         object edtPOPassword: TLabeledEdit
           Left = 200
@@ -576,7 +585,7 @@ object frmSignup: TfrmSignup
           BorderStyle = bsNone
           Color = clWhite
           EditLabel.Width = 71
-          EditLabel.Height = 19
+          EditLabel.Height = 33
           EditLabel.Caption = 'Password'
           EditLabel.Font.Charset = ANSI_CHARSET
           EditLabel.Font.Color = clGrayText
@@ -595,6 +604,7 @@ object frmSignup: TfrmSignup
           ParentFont = False
           PasswordChar = '*'
           TabOrder = 3
+          Text = ''
         end
         object edtPORepeatPassword: TLabeledEdit
           Left = 200
@@ -604,7 +614,7 @@ object frmSignup: TfrmSignup
           BorderStyle = bsNone
           Color = clWhite
           EditLabel.Width = 124
-          EditLabel.Height = 19
+          EditLabel.Height = 33
           EditLabel.Caption = 'Repeat Password'
           EditLabel.Font.Charset = ANSI_CHARSET
           EditLabel.Font.Color = clGrayText
@@ -623,6 +633,7 @@ object frmSignup: TfrmSignup
           ParentFont = False
           PasswordChar = '*'
           TabOrder = 4
+          Text = ''
         end
         object pnlSignupButton: TPanel
           Left = 272
@@ -811,7 +822,7 @@ object frmSignup: TfrmSignup
           BorderStyle = bsNone
           Color = clWhite
           EditLabel.Width = 114
-          EditLabel.Height = 19
+          EditLabel.Height = 33
           EditLabel.Caption = 'Company Name'
           EditLabel.Font.Charset = ANSI_CHARSET
           EditLabel.Font.Color = clGrayText
@@ -829,6 +840,7 @@ object frmSignup: TfrmSignup
           LabelSpacing = 30
           ParentFont = False
           TabOrder = 0
+          Text = ''
         end
         object edtSPPassword: TLabeledEdit
           Left = 200
@@ -838,7 +850,7 @@ object frmSignup: TfrmSignup
           BorderStyle = bsNone
           Color = clWhite
           EditLabel.Width = 71
-          EditLabel.Height = 19
+          EditLabel.Height = 33
           EditLabel.Caption = 'Password'
           EditLabel.Font.Charset = ANSI_CHARSET
           EditLabel.Font.Color = clGrayText
@@ -857,6 +869,7 @@ object frmSignup: TfrmSignup
           ParentFont = False
           PasswordChar = '*'
           TabOrder = 1
+          Text = ''
         end
         object edtSPRepeatPassword: TLabeledEdit
           Left = 200
@@ -866,7 +879,7 @@ object frmSignup: TfrmSignup
           BorderStyle = bsNone
           Color = clWhite
           EditLabel.Width = 124
-          EditLabel.Height = 19
+          EditLabel.Height = 33
           EditLabel.Caption = 'Repeat Password'
           EditLabel.Font.Charset = ANSI_CHARSET
           EditLabel.Font.Color = clGrayText
@@ -885,6 +898,7 @@ object frmSignup: TfrmSignup
           ParentFont = False
           PasswordChar = '*'
           TabOrder = 2
+          Text = ''
         end
       end
     end
@@ -1275,7 +1289,7 @@ object frmSignup: TfrmSignup
           BorderStyle = bsNone
           Color = clWhite
           EditLabel.Width = 40
-          EditLabel.Height = 19
+          EditLabel.Height = 33
           EditLabel.Caption = 'Email'
           EditLabel.Font.Charset = ANSI_CHARSET
           EditLabel.Font.Color = clGrayText
@@ -1293,6 +1307,7 @@ object frmSignup: TfrmSignup
           LabelSpacing = 30
           ParentFont = False
           TabOrder = 0
+          Text = ''
         end
         object edtPhone: TLabeledEdit
           Left = 200
@@ -1302,7 +1317,7 @@ object frmSignup: TfrmSignup
           BorderStyle = bsNone
           Color = clWhite
           EditLabel.Width = 45
-          EditLabel.Height = 19
+          EditLabel.Height = 33
           EditLabel.Caption = 'Phone'
           EditLabel.Font.Charset = ANSI_CHARSET
           EditLabel.Font.Color = clGrayText
@@ -1320,6 +1335,7 @@ object frmSignup: TfrmSignup
           LabelSpacing = 30
           ParentFont = False
           TabOrder = 1
+          Text = ''
         end
       end
     end

@@ -85,6 +85,7 @@ type
     btnUploadBanner: TBitBtn;
     pnlSPSignup: TPanel;
     shpSPSignup: TShape;
+    pnlFuture: TPanel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure imgPropertyMouseEnter(Sender: TObject);
     procedure imgPropertyMouseLeave(Sender: TObject);

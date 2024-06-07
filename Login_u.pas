@@ -32,6 +32,7 @@ type
 
   public
   { Public declarations }
+  iUserID : integer;
 
     CONST
     clPrimary = TColor($00FEA034);
@@ -83,6 +84,7 @@ begin
     end;
     closeFile(loginFile);
 
+    iUserID := strToInt(aLoginDetail[1]);
     edtLoginEmail.Text := aLoginDetail[2];
     edtLoginPassword.Text := aLoginDetail[3];
 

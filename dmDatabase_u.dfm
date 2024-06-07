@@ -25,7 +25,7 @@ object dmDatabase: TdmDatabase
     Active = True
     Connection = conDB
     CursorType = ctStatic
-    TableName = 'PropertyOwners'
+    TableName = 'tblPropertyOwners'
     Left = 232
     Top = 216
   end
@@ -33,26 +33,28 @@ object dmDatabase: TdmDatabase
     Active = True
     Connection = conDB
     CursorType = ctStatic
-    TableName = 'ServiceTypes'
+    TableName = 'tblServiceTypes'
     Left = 232
     Top = 304
   end
   object tblServiceProviders: TADOTable
+    Active = True
     Connection = conDB
     CursorType = ctStatic
-    TableName = 'ServiceProviders'
+    TableName = 'tblServiceProviders'
     Left = 232
     Top = 128
   end
   object qryServiceProviders: TADOQuery
+    Active = True
     Connection = conDB
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'SELECT *'
-      'FROM  ServiceProviders AS sp,'
+      'FROM  tblServiceProviders AS sp,'
       '(SELECT CompanyID, ROUND(AVG(r.Rating), 2) AS [Rating]'
-      'FROM Ratings AS r'
+      'FROM tblRatings AS r'
       'GROUP BY r.CompanyID) as x'
       'WHERE x.CompanyID = sp.ID'
       ''
@@ -65,5 +67,75 @@ object dmDatabase: TdmDatabase
     DataSet = qryServiceProviders
     Left = 408
     Top = 128
+  end
+  object tblRequests: TADOTable
+    Active = True
+    Connection = conDB
+    CursorType = ctStatic
+    TableName = 'tblRequests'
+    Left = 232
+    Top = 368
+  end
+  object dsRequestOffers: TDataSource
+    DataSet = qryRequestOffers
+    Left = 416
+    Top = 200
+  end
+  object qryRequestOffers: TADOQuery
+    Active = True
+    Connection = conDB
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      
+        'SELECT ID, RequestID, (SELECT ServiceType FROM tblServiceTypes W' +
+        'HERE ID = (SELECT ServiceType FROM tblServiceProviders WHERE ID ' +
+        '= tblOffers.ServiceProviderID)) AS [Service Type], (SELECT Compa' +
+        'nyName FROM tblServiceProviders WHERE ID = tblOffers.ServiceProv' +
+        'iderID) AS Company, FORMAT(Quote, '#39'Currency'#39') AS [Quote Offered]' +
+        ', (SELECT Description FROM tblRequests WHERE ID = tblOffers.Requ' +
+        'estID) AS [Your description]'
+      'FROM tblOffers'
+      'ORDER BY RequestID DESC;')
+    Left = 416
+    Top = 280
+  end
+  object tblOffers: TADOTable
+    Active = True
+    Connection = conDB
+    CursorType = ctStatic
+    TableName = 'tblOffers'
+    Left = 128
+    Top = 392
+  end
+  object tblRatings: TADOTable
+    Active = True
+    Connection = conDB
+    CursorType = ctStatic
+    TableName = 'tblRatings'
+    Left = 112
+    Top = 56
+  end
+  object qry: TADOQuery
+    Connection = conDB
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      '')
+    Left = 72
+    Top = 312
+  end
+  object qryServiceTypes: TADOQuery
+    Active = True
+    Connection = conDB
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT st.ServiceType, COUNT(sp.ID) AS [Count] '
+      'FROM tblServiceProviders AS sp,  tblServiceTypes AS st '
+      'WHERE sp.ServiceType=st.ID'
+      'GROUP BY st.ServiceType ')
+    Left = 312
+    Top = 336
   end
 end

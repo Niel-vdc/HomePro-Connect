@@ -165,6 +165,8 @@ begin
   btnRequest.Font.Color := Vcl.Graphics.clWebDarkOrange;
   btnRequest.Font.style := [fsBold];
   btnRequest.OnClick := requestClick;
+  btnRequest.Hint := 'This button will take you to the request page for this company';
+  btnRequest.showHint := True;
 
   btnHelp.Height := 30;
   btnHelp.Width := 30;
@@ -176,6 +178,8 @@ begin
   btnHelp.Font.Color := clBlack;
   btnHelp.Font.style := [fsBold];
   btnHelp.OnClick := helpClick;
+  btnHelp.Hint := 'Help';
+  btnHelp.ShowHint := True;
 
   // description
   lblDescription.Caption := getDescription();
@@ -272,7 +276,7 @@ end;
 
 procedure TServiceProviderCard.helpClick(Sender: TObject);
 begin
-  showMessage('This is a helpful dialog');
+  showMessage('Click here to request a quote directly to this company. You will be asked to enter a concise description of the job you want to be completed.');
 end;
 
 procedure TServiceProviderCard.requestClick(Sender: TObject);
@@ -281,6 +285,7 @@ begin
   dmDatabase.tblServiceProviders.Locate('ID', fID, []);
   frmPropertyOwner.lblChosenCompany.Caption := 'Company: ' +
     dmDatabase.tblServiceProviders['CompanyName'];
+  frmPropertyOwner.cmbRequestServiceType.Visible := False;
 
 end;
 

@@ -35,6 +35,7 @@ object frmLogin: TfrmLogin
       Width = 81
       Height = 41
       Cursor = crHandPoint
+      Hint = 'Don'#39't have an account yet?'
       Caption = 'Sign Up'
       Flat = True
       Font.Charset = ANSI_CHARSET
@@ -43,6 +44,8 @@ object frmLogin: TfrmLogin
       Font.Name = 'Roboto Bk'
       Font.Style = []
       ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
       OnClick = btnSignupClick
     end
     object shpLoginButton: TShape

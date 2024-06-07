@@ -19,7 +19,7 @@ object frmPropertyOwner: TfrmPropertyOwner
     Top = 60
     Width = 750
     Height = 490
-    ActivePage = tabBrowse
+    ActivePage = tabCompare
     Align = alClient
     TabOrder = 0
     object tabBrowse: TTabSheet
@@ -36,7 +36,7 @@ object frmPropertyOwner: TfrmPropertyOwner
         object pnlFilter: TPanel
           Left = 1
           Top = 1
-          Width = 192
+          Width = 208
           Height = 478
           Align = alLeft
           BevelOuter = bvNone
@@ -107,13 +107,13 @@ object frmPropertyOwner: TfrmPropertyOwner
             ParentFont = False
           end
           object cmbFilterServiceType: TComboBox
-            Left = 24
+            Left = 8
             Top = 147
-            Width = 145
-            Height = 27
+            Width = 194
+            Height = 26
             Font.Charset = ANSI_CHARSET
             Font.Color = clWindowText
-            Font.Height = -16
+            Font.Height = -15
             Font.Name = 'Roboto'
             Font.Style = []
             ParentFont = False
@@ -133,7 +133,7 @@ object frmPropertyOwner: TfrmPropertyOwner
             Font.Style = []
             ItemIndex = 0
             Items.Strings = (
-              'No sorting'
+              'No limit'
               '> 10'
               '> 50'
               '> 100')
@@ -163,21 +163,24 @@ object frmPropertyOwner: TfrmPropertyOwner
           end
         end
         object pnlBrowseContainer: TPanel
-          Left = 193
+          Left = 209
           Top = 1
-          Width = 548
+          Width = 532
           Height = 478
           Align = alClient
           BevelOuter = bvNone
           TabOrder = 1
+          ExplicitLeft = 193
+          ExplicitWidth = 548
           object ScrollBox: TScrollBox
             Left = 0
             Top = 0
-            Width = 548
+            Width = 532
             Height = 478
             Align = alClient
             BorderStyle = bsNone
             TabOrder = 0
+            ExplicitWidth = 548
           end
         end
       end
@@ -346,6 +349,7 @@ object frmPropertyOwner: TfrmPropertyOwner
           Top = 176
           Width = 377
           Height = 169
+          Hint = 'Enter a description of 255 characters and under'
           BevelInner = bvNone
           BorderStyle = bsNone
           Font.Charset = DEFAULT_CHARSET
@@ -358,7 +362,7 @@ object frmPropertyOwner: TfrmPropertyOwner
           ParentFont = False
           ParentShowHint = False
           ScrollBars = ssVertical
-          ShowHint = False
+          ShowHint = True
           TabOrder = 0
         end
         object pnlRequestButton: TPanel
@@ -367,6 +371,9 @@ object frmPropertyOwner: TfrmPropertyOwner
           Width = 225
           Height = 49
           Cursor = crHandPoint
+          Hint = 
+            'Your request will be sent to all service providers who work in y' +
+            'our selected service type.'
           BevelOuter = bvNone
           Caption = 'Send request'
           Color = 16686901
@@ -377,8 +384,43 @@ object frmPropertyOwner: TfrmPropertyOwner
           Font.Style = []
           ParentBackground = False
           ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
+          OnClick = pnlRequestButtonClick
         end
+        object cmbRequestServiceType: TComboBox
+          Left = 176
+          Top = 89
+          Width = 385
+          Height = 27
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Roboto'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 2
+          Text = 'Select service type'
+        end
+      end
+      object btnRequestHelp: TBitBtn
+        Left = 680
+        Top = 24
+        Width = 33
+        Height = 33
+        Hint = 'Help'
+        Caption = '?'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 1
+        OnClick = btnRequestHelpClick
       end
     end
     object tabCompare: TTabSheet
@@ -391,6 +433,7 @@ object frmPropertyOwner: TfrmPropertyOwner
         Width = 742
         Height = 480
         Align = alClient
+        ParentBackground = False
         TabOrder = 0
         object lblCompareHeading: TLabel
           Left = 96
@@ -406,17 +449,176 @@ object frmPropertyOwner: TfrmPropertyOwner
           ParentFont = False
         end
         object dbGrid: TDBGrid
-          Left = 56
+          Left = 32
           Top = 97
-          Width = 641
+          Width = 673
           Height = 280
-          DataSource = dmDatabase.dsQuerySP
+          DataSource = dmDatabase.dsRequestOffers
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Roboto'
+          Font.Style = []
+          Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+          ParentFont = False
+          ReadOnly = True
           TabOrder = 0
-          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Charset = ANSI_CHARSET
           TitleFont.Color = clWindowText
-          TitleFont.Height = -12
-          TitleFont.Name = 'Segoe UI'
+          TitleFont.Height = -16
+          TitleFont.Name = 'Roboto Bk'
           TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'RequestID'
+              Title.Caption = 'Request ID'
+              Width = 87
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Service Type'
+              Width = 150
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Company'
+              Width = 150
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Quote Offered'
+              Width = 150
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Your description'
+              Width = 200
+              Visible = True
+            end>
+        end
+        object dbNavigator: TDBNavigator
+          Left = 560
+          Top = 66
+          Width = 140
+          Height = 25
+          DataSource = dmDatabase.dsRequestOffers
+          VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
+          TabOrder = 1
+        end
+        object btnSeeRequestDescription: TBitBtn
+          Left = 32
+          Top = 392
+          Width = 233
+          Height = 33
+          Hint = 'This is the description which you entered in your job request'
+          Caption = 'View your request description'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Roboto'
+          Font.Style = []
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 2
+          OnClick = btnSeeRequestDescriptionClick
+        end
+        object btnViewCompanyInfo: TBitBtn
+          Left = 32
+          Top = 431
+          Width = 233
+          Height = 33
+          Hint = 'This includes rating, jobs completed and a description'
+          Caption = 'View company information'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Roboto'
+          Font.Style = []
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          OnClick = btnViewCompanyInfoClick
+        end
+        object btnSelectOffer: TBitBtn
+          Left = 271
+          Top = 392
+          Width = 210
+          Height = 33
+          Hint = 
+            'This will open your default email application and address a new ' +
+            'email to the selected company'
+          Caption = 'Contact this company'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Roboto Bk'
+          Font.Style = []
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 4
+          OnClick = btnSelectOfferClick
+        end
+        object btnCompareHelp: TBitBtn
+          Left = 672
+          Top = 16
+          Width = 33
+          Height = 33
+          Hint = 'Help'
+          Caption = '?'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 5
+          OnClick = btnCompareHelpClick
+        end
+        object btnComplete: TBitBtn
+          Left = 528
+          Top = 393
+          Width = 169
+          Height = 33
+          Hint = 'Rate the company and delete the request thereafter'
+          Caption = 'Complete this request'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = 6469635
+          Font.Height = -16
+          Font.Name = 'Roboto'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 6
+          OnClick = btnCompleteClick
+        end
+        object btnDeleteRequest: TBitBtn
+          Left = 528
+          Top = 432
+          Width = 172
+          Height = 33
+          Hint = 'Careful!'
+          Caption = 'Delete this request'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clRed
+          Font.Height = -16
+          Font.Name = 'Roboto'
+          Font.Style = [fsBold, fsItalic]
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 7
+          OnClick = btnDeleteRequestClick
         end
       end
     end
@@ -430,13 +632,14 @@ object frmPropertyOwner: TfrmPropertyOwner
         Width = 742
         Height = 480
         Align = alClient
+        ParentBackground = False
         TabOrder = 0
         object lblProfileHeading: TLabel
-          Left = 88
-          Top = 48
-          Width = 148
+          Left = 215
+          Top = 80
+          Width = 304
           Height = 35
-          Caption = 'Your profile'
+          Caption = 'Your profile information'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -29
@@ -444,6 +647,121 @@ object frmPropertyOwner: TfrmPropertyOwner
           Font.Style = []
           ParentFont = False
         end
+        object edtName: TLabeledEdit
+          Left = 216
+          Top = 152
+          Width = 313
+          Height = 27
+          EditLabel.Width = 76
+          EditLabel.Height = 27
+          EditLabel.Caption = 'First name'
+          EditLabel.Font.Charset = ANSI_CHARSET
+          EditLabel.Font.Color = clWindowText
+          EditLabel.Font.Height = -16
+          EditLabel.Font.Name = 'Roboto Bk'
+          EditLabel.Font.Style = []
+          EditLabel.ParentFont = False
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Roboto'
+          Font.Style = []
+          LabelPosition = lpLeft
+          LabelSpacing = 10
+          ParentFont = False
+          TabOrder = 0
+          Text = ''
+        end
+        object edtSurname: TLabeledEdit
+          Left = 216
+          Top = 194
+          Width = 313
+          Height = 27
+          EditLabel.Width = 64
+          EditLabel.Height = 27
+          EditLabel.Caption = 'Surname'
+          EditLabel.Font.Charset = ANSI_CHARSET
+          EditLabel.Font.Color = clWindowText
+          EditLabel.Font.Height = -16
+          EditLabel.Font.Name = 'Roboto Bk'
+          EditLabel.Font.Style = []
+          EditLabel.ParentFont = False
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Roboto'
+          Font.Style = []
+          LabelPosition = lpLeft
+          LabelSpacing = 10
+          ParentFont = False
+          TabOrder = 1
+          Text = ''
+        end
+        object edtEmail: TLabeledEdit
+          Left = 216
+          Top = 234
+          Width = 313
+          Height = 27
+          EditLabel.Width = 46
+          EditLabel.Height = 27
+          EditLabel.Caption = 'E-mail'
+          EditLabel.Font.Charset = ANSI_CHARSET
+          EditLabel.Font.Color = clWindowText
+          EditLabel.Font.Height = -16
+          EditLabel.Font.Name = 'Roboto Bk'
+          EditLabel.Font.Style = []
+          EditLabel.ParentFont = False
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Roboto'
+          Font.Style = []
+          LabelPosition = lpLeft
+          LabelSpacing = 10
+          ParentFont = False
+          TabOrder = 2
+          Text = ''
+        end
+        object edtPassword: TLabeledEdit
+          Left = 216
+          Top = 274
+          Width = 313
+          Height = 27
+          EditLabel.Width = 70
+          EditLabel.Height = 27
+          EditLabel.Caption = 'Password'
+          EditLabel.Font.Charset = ANSI_CHARSET
+          EditLabel.Font.Color = clWindowText
+          EditLabel.Font.Height = -16
+          EditLabel.Font.Name = 'Roboto Bk'
+          EditLabel.Font.Style = []
+          EditLabel.ParentFont = False
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Roboto'
+          Font.Style = []
+          LabelPosition = lpLeft
+          LabelSpacing = 10
+          ParentFont = False
+          TabOrder = 3
+          Text = ''
+        end
+      end
+      object btnSaveProfile: TBitBtn
+        Left = 215
+        Top = 336
+        Width = 314
+        Height = 49
+        Caption = 'Save'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Roboto Bk'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 1
+        OnClick = btnSaveProfileClick
       end
     end
   end
@@ -483,7 +801,7 @@ object frmPropertyOwner: TfrmPropertyOwner
       OnMouseLeave = NavlinkMouseLeave
     end
     object pnlNavlinkCompare: TPanel
-      Left = 143
+      Left = 254
       Top = 2
       Width = 113
       Height = 58
@@ -526,5 +844,51 @@ object frmPropertyOwner: TfrmPropertyOwner
       OnMouseEnter = NavlinkMouseEnter
       OnMouseLeave = NavlinkMouseLeave
     end
+    object pnlNavLinkRequest: TPanel
+      Left = 143
+      Top = 2
+      Width = 113
+      Height = 58
+      Cursor = crHandPoint
+      Hint = '1'
+      BevelOuter = bvNone
+      Caption = 'Request'
+      Color = 16686901
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Name = 'Roboto Bk'
+      Font.Style = []
+      ParentBackground = False
+      ParentFont = False
+      TabOrder = 3
+      OnClick = NavlinkClick
+      OnMouseEnter = NavlinkMouseEnter
+      OnMouseLeave = NavlinkMouseLeave
+    end
+  end
+  object tdlRate: TTaskDialog
+    Buttons = <>
+    RadioButtons = <
+      item
+        Caption = #9733
+      end
+      item
+        Caption = #9733#9733
+      end
+      item
+        Caption = #9733#9733#9733
+      end
+      item
+        Caption = #9733#9733#9733#9733
+      end
+      item
+        Caption = #9733#9733#9733#9733#9733
+        Default = True
+      end>
+    Text = 'Please rate this company'
+    Title = 'Rate'
+    Left = 492
+    Top = 498
   end
 end
